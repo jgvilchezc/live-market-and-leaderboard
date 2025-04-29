@@ -1,0 +1,109 @@
+/* SCSS module for LeaderboardTable */
+
+/* Styles for Leaderboard Table */
+
+@import "../base/variables";
+
+.tableHeader {
+  background-color: $gray-50;
+
+  [data-theme="dark"] & {
+    background-color: $gray-800;
+  }
+}
+
+.headerCell {
+  padding: $spacing-sm $spacing-lg;
+  text-align: left;
+  font-size: $font-size-xs;
+  font-weight: 500; // Medium weight
+  color: $gray-500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em; // Wider tracking
+
+  [data-theme="dark"] & {
+    color: $gray-300;
+  }
+}
+
+// Base styles for body cells
+.bodyCell {
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-sm;
+  color: $gray-500;
+  vertical-align: middle; // Align text nicely if rows wrap
+  transition: background-color 0.15s ease-in-out; // Smooth transition for hover
+
+  [data-theme="dark"] & {
+    color: $gray-300;
+  }
+}
+
+// Specific cell types using composes
+.rankCell {
+  composes: bodyCell;
+  white-space: nowrap;
+  font-weight: 500;
+  color: $gray-900;
+  [data-theme="dark"] & {
+    color: $white;
+  }
+}
+
+.usernameCell {
+  composes: bodyCell;
+  white-space: nowrap;
+}
+
+.levelCell {
+  composes: bodyCell;
+  white-space: nowrap;
+}
+
+.xpCell {
+  composes: bodyCell;
+  white-space: nowrap;
+}
+
+.goldCell {
+  composes: bodyCell;
+  white-space: nowrap;
+}
+
+.tableRow {
+  // Apply hover effect to cells within the row
+  &:hover {
+    .bodyCell, // Target the base cell class
+    .rankCell, // Ensure composed classes also get hover
+    .usernameCell,
+    .levelCell,
+    .xpCell,
+    .goldCell {
+      background-color: $gray-100;
+      [data-theme="dark"] & {
+        background-color: $gray-700;
+      }
+    }
+  }
+}
+
+// --- Media Queries (Example: Adjust padding on smaller screens) ---
+
+// Apply styles below the 'sm' breakpoint (mobile first approach)
+.headerCell,
+.bodyCell {
+  padding: $spacing-xs $spacing-sm; // Smaller padding on mobile
+}
+
+// Apply styles from 'sm' breakpoint upwards
+@include breakpoint(sm) {
+  .headerCell,
+  .bodyCell {
+    padding: $spacing-sm $spacing-lg; // Standard padding sm and up
+  }
+}
+
+// Apply styles from 'lg' breakpoint upwards (if needed)
+// @include breakpoint(lg) {
+//   /* Larger desktop specific styles */
+// }

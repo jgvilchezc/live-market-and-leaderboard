@@ -1,0 +1,81 @@
+@import "../base/variables";
+
+.tableHeader {
+  background-color: $gray-50;
+  [data-theme="dark"] & {
+    background-color: $gray-800;
+  }
+}
+
+.tableRow {
+  &:hover {
+    .bodyCell,
+    .nameCell,
+    .descriptionCell,
+    .costCell {
+      background-color: $gray-100;
+      [data-theme="dark"] & {
+        background-color: $gray-700;
+      }
+    }
+  }
+}
+
+.headerCell {
+  padding: $spacing-sm $spacing-lg;
+  text-align: left;
+  font-size: $font-size-xs;
+  font-weight: 500;
+  color: $gray-500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  [data-theme="dark"] & {
+    color: $gray-300;
+  }
+}
+
+.bodyCell {
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-sm;
+  color: $gray-500;
+  vertical-align: middle;
+  transition: background-color 0.15s ease-in-out;
+
+  [data-theme="dark"] & {
+    color: $gray-300;
+  }
+}
+
+.nameCell {
+  composes: bodyCell;
+  white-space: nowrap;
+  font-weight: 500;
+  color: $gray-900;
+  [data-theme="dark"] & {
+    color: $white;
+  }
+}
+
+.descriptionCell {
+  composes: bodyCell;
+  white-space: normal;
+}
+
+.costCell {
+  composes: bodyCell;
+  white-space: nowrap;
+}
+
+// --- Media Queries ---
+
+.headerCell,
+.bodyCell {
+  padding: $spacing-xs $spacing-sm;
+}
+
+@include breakpoint(sm) {
+  .headerCell,
+  .bodyCell {
+    padding: $spacing-sm $spacing-lg;
+  }
+}

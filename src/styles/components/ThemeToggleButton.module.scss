@@ -1,0 +1,121 @@
+@import "../base/variables";
+
+// Adapt the user-provided styles for the theme toggle button
+.themeToggleButton {
+  display: inline-flex; // Use inline-flex for better alignment with text/icons
+  padding: $spacing-xs $spacing-lg; // Use variables
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: $gray-700; // Use variable for text color (adjust based on light theme needs)
+  // font-family: Pretendard; // Let's use the project's default font (Geist Sans)
+  font-size: $font-size-sm; // Use variable
+  font-weight: 500;
+  line-height: normal;
+  position: relative;
+  z-index: 1;
+  background-color: $white; // Use variable
+  border-radius: 20px; // Consider using a variable if common
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden; // Ensure pseudo-elements don't bleed out
+
+  // Style the SVG icon within the button
+  svg {
+    width: 1.25rem; // Equivalent to h-5 w-5 in Tailwind
+    height: 1.25rem;
+    color: $gray-700; // Match button text color initially
+    transition: color 0.3s ease;
+    // Target path if needed, but direct color on svg usually works
+    // path {
+    //   transition: color 0.3s ease;
+    // }
+  }
+
+  // Gradient border using ::before
+  &::before {
+    content: "";
+    position: absolute;
+    // Adjust positioning to account for the border thickness
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 20px; // Match parent radius
+    // Example gradient - adjust colors as needed
+    background: linear-gradient(
+      90deg,
+      rgba(193, 207, 255, 1) 0%,
+      rgba(62, 99, 221, 1) 59%,
+      rgba(0, 255, 218, 1) 100%
+    );
+    z-index: -1;
+  }
+
+  // Inner background using ::after to mask the gradient border
+  &::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background-color: $white; // Use variable
+    border-radius: 18px; // Slightly smaller to reveal the gradient border
+    z-index: -1;
+    transition: background-color 0.3s ease, background 0.3s ease; // Include background transition
+  }
+
+  // Hover state
+  &:hover {
+    color: $white !important; // Force white text on hover
+
+    svg {
+      color: $white; // White icon on hover
+    }
+
+    // Change ::after background to reveal the gradient fully on hover
+    &::after {
+      background: linear-gradient(
+        90deg,
+        rgba(193, 207, 255, 1) 0%,
+        rgba(62, 99, 221, 1) 59%,
+        rgba(0, 255, 218, 1) 100%
+      );
+      // Or simply make it transparent if the gradient is on ::before
+      // background-color: transparent;
+    }
+  }
+
+  // Dark theme adjustments
+  [data-theme="dark"] & {
+    background-color: $gray-800; // Dark background for the button
+    color: $gray-300; // Lighter text for dark theme
+
+    svg {
+      color: $gray-300; // Lighter icon for dark theme
+    }
+
+    &::after {
+      background-color: $gray-800; // Match dark button background
+    }
+
+    &:hover {
+      color: $white !important; // Keep hover text white
+      svg {
+        color: $white; // Keep hover icon white
+      }
+      &::after {
+        // Ensure hover reveals gradient in dark mode too
+        background: linear-gradient(
+          90deg,
+          rgba(193, 207, 255, 1) 0%,
+          rgba(62, 99, 221, 1) 59%,
+          rgba(0, 255, 218, 1) 100%
+        );
+        // background-color: transparent;
+      }
+    }
+  }
+}
