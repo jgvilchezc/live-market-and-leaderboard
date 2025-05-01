@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
 import layoutStyles from "@/styles/layout/RootLayout.module.scss";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Game Dashboard",
@@ -31,6 +32,7 @@ export default function RootLayout({
       </head>
       <body className={layoutStyles.rootBody}>
         <ThemeProvider>
+          <Toaster position="bottom-center" />
           <div className="absolute top-4 right-4 z-50">
             <ThemeToggleButton />
           </div>
