@@ -1,20 +1,15 @@
 import type { Config } from "tailwindcss";
 
-// Import colors directly from variables might be complex,
-// so we define them explicitly here based on _variables.scss
-
-// Main semantic colors
 const brand = {
-  500: "#3e63dd", // $brand__500 / $purple_600
-  light: "#e3e9fd", // $brand__light
+  500: "#3e63dd",
+  light: "#e3e9fd",
 };
-const primary = "#101837"; // $primary
-const secondary = "#9fa2d1"; // $secondary
-const success = "#2955a3"; // $success
-const warning = "#de035e"; // $warning
+const primary = "#101837";
+const secondary = "#9fa2d1";
+const success = "#2955a3";
+const warning = "#de035e";
 const white = "#ffffff";
 
-// Scales matching _variables.scss
 const blue = {
   50: "#deebff",
   100: "#d7e4ff",
@@ -35,7 +30,7 @@ const purple = {
   300: "#c1cfff",
   400: "#7c9aff",
   500: "#436bff",
-  600: "#3e63dd", // Matches brand[500]
+  600: "#3e63dd",
   700: "#0d33b2",
   800: "#1600a4",
   900: "#1c0d80",
@@ -101,16 +96,12 @@ const config: Config = {
         navy: navy,
         mint: mint,
         black: black,
-        // Map the black scale to gray for compatibility with existing TW classes if needed
         gray: black,
       },
       fontFamily: {
-        // Add Roboto font family
-        sans: ["Roboto", "sans-serif"], // Makes Roboto the default sans font
-        roboto: ["Roboto", "sans-serif"], // Explicit roboto key
+        sans: ["Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
-      // You can also extend other theme aspects like spacing, borderRadius etc.
-      // based on your _variables.scss if you want to use Tailwind classes for them.
     },
   },
   plugins: [],
