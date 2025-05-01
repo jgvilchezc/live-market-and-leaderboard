@@ -3,7 +3,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
 import layoutStyles from "@/styles/layout/RootLayout.module.scss";
-import { Toaster } from "react-hot-toast";
 import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
 
 export const metadata: Metadata = {
@@ -33,7 +32,6 @@ export default function RootLayout({
       </head>
       <body className={layoutStyles.rootBody}>
         <ThemeProvider>
-          <Toaster position="bottom-center" />
           <ServiceWorkerRegistrar />
           <div className="absolute top-4 right-4 z-50">
             <ThemeToggleButton />
