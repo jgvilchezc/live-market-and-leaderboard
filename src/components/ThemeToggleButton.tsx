@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useTheme } from "@/context/ThemeContext";
-import styles from "@/styles/components/ThemeToggleButton.module.scss"; // We will create this file next
+import styles from "@/styles/components/ThemeToggleButton.module.scss";
 
 // Simple SVG Icons for Sun and Moon
 const SunIcon = () => (
@@ -45,7 +45,7 @@ const ThemeToggleButton: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className={styles.themeToggleButton} // Use the class from SCSS module
+      className={styles.themeToggleButton}
       aria-label={
         theme === "light" ? "Switch to dark theme" : "Switch to light theme"
       }

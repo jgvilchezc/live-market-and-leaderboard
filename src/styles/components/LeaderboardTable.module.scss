@@ -1,12 +1,9 @@
-/* SCSS module for LeaderboardTable */
-
-/* Styles for Leaderboard Table */
-
 @import "../base/variables";
 
 .tableHeader {
-  background-color: $gray-50;
-
+  [data-theme="light"] & {
+    background-color: $gray-50;
+  }
   [data-theme="dark"] & {
     background-color: $gray-800;
   }
@@ -16,35 +13,45 @@
   padding: $spacing-sm $spacing-lg;
   text-align: left;
   font-size: $font-size-xs;
-  font-weight: 500; // Medium weight
-  color: $gray-500;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em; // Wider tracking
+  letter-spacing: 0.05em;
 
+  [data-theme="light"] & {
+    color: $gray-700;
+  }
   [data-theme="dark"] & {
     color: $gray-300;
   }
 }
 
-// Base styles for body cells
 .bodyCell {
   padding: $spacing-md $spacing-lg;
   font-size: $font-size-sm;
-  color: $gray-500;
-  vertical-align: middle; // Align text nicely if rows wrap
-  transition: background-color 0.15s ease-in-out; // Smooth transition for hover
+  vertical-align: middle;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 
+  [data-theme="light"] & {
+    color: $gray-700;
+    background-color: $white;
+    &:hover {
+      color: $gray-900;
+    }
+  }
   [data-theme="dark"] & {
     color: $gray-300;
   }
 }
 
-// Specific cell types using composes
 .rankCell {
   composes: bodyCell;
   white-space: nowrap;
   font-weight: 500;
-  color: $gray-900;
+
+  [data-theme="light"] & {
+    color: $gray-900;
+    background-color: $white;
+  }
   [data-theme="dark"] & {
     color: $white;
   }
@@ -71,15 +78,16 @@
 }
 
 .tableRow {
-  // Apply hover effect to cells within the row
   &:hover {
-    .bodyCell, // Target the base cell class
-    .rankCell, // Ensure composed classes also get hover
+    .bodyCell,
+    .rankCell,
     .usernameCell,
     .levelCell,
     .xpCell,
     .goldCell {
-      background-color: $gray-100;
+      [data-theme="light"] & {
+        background-color: $gray-100;
+      }
       [data-theme="dark"] & {
         background-color: $gray-700;
       }
@@ -87,23 +95,14 @@
   }
 }
 
-// --- Media Queries (Example: Adjust padding on smaller screens) ---
-
-// Apply styles below the 'sm' breakpoint (mobile first approach)
 .headerCell,
 .bodyCell {
-  padding: $spacing-xs $spacing-sm; // Smaller padding on mobile
+  padding: $spacing-xs $spacing-sm;
 }
 
-// Apply styles from 'sm' breakpoint upwards
-@include breakpoint(sm) {
+@include breakpoint(tablet) {
   .headerCell,
   .bodyCell {
-    padding: $spacing-sm $spacing-lg; // Standard padding sm and up
+    padding: $spacing-sm $spacing-lg;
   }
 }
-
-// Apply styles from 'lg' breakpoint upwards (if needed)
-// @include breakpoint(lg) {
-//   /* Larger desktop specific styles */
-// }

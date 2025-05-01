@@ -1,0 +1,53 @@
+@import "../base/variables";
+
+.mainContainer {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $spacing-md;
+  padding-right: $spacing-md;
+  padding-top: $spacing-lg;
+  padding-bottom: $spacing-lg;
+
+  @include breakpoint(tablet) {
+    padding-left: $spacing-lg;
+    padding-right: $spacing-lg;
+    padding-top: ($spacing-lg * 1.33);
+    padding-bottom: ($spacing-lg * 1.33);
+  }
+
+  @include breakpoint(largePhone) {
+    max-width: map-get($breakpoints, largePhone);
+  }
+  @include breakpoint(tablet) {
+    max-width: map-get($breakpoints, tablet);
+  }
+  @include breakpoint(desktop) {
+    max-width: map-get($breakpoints, desktop);
+  }
+  @include breakpoint(desktopLarge) {
+    max-width: map-get($breakpoints, desktopLarge);
+  }
+}
+
+.pageTitle {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 700;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+
+  @include breakpoint(tablet) {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    margin-bottom: ($spacing-lg * 1.33);
+  }
+
+  [data-theme="light"] & {
+    color: $gray-800;
+  }
+
+  [data-theme="dark"] & {
+    color: $gray-100;
+  }
+}

@@ -1,0 +1,135 @@
+@import "../base/variables";
+
+.expandableContainer {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: $border-radius-lg;
+  margin-bottom: $spacing-md;
+  overflow: hidden;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+
+  [data-theme="light"] & {
+    border-color: $black_300;
+  }
+  [data-theme="dark"] & {
+    border-color: $black_600;
+  }
+}
+
+.expandableButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: $spacing-sm;
+  transition: background-color 0.15s ease-in-out;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+
+  @include breakpoint(tablet) {
+    padding: $spacing-md;
+  }
+
+  [data-theme="light"] & {
+    background-color: $black_50;
+    &:hover {
+      background-color: $black_100;
+    }
+    &:focus {
+      box-shadow: 0 0 0 2px rgba($blue_500, 0.5);
+    }
+  }
+
+  [data-theme="dark"] & {
+    background-color: $black_800;
+    &:hover {
+      background-color: $black_700;
+    }
+    &:focus {
+      box-shadow: 0 0 0 2px rgba($blue_400, 0.5);
+    }
+  }
+}
+
+.expandableTitle {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: $spacing-sm;
+
+  @include breakpoint(tablet) {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
+.toggleIcon {
+  font-size: 1.25rem;
+  margin-left: $spacing-sm;
+  transition: transform 0.3s ease-in-out;
+  transform-origin: center;
+
+  @include breakpoint(tablet) {
+    font-size: 1.5rem;
+  }
+
+  @include breakpoint(desktop) {
+    display: none;
+  }
+
+  &.expanded {
+    transform: rotate(180deg);
+  }
+}
+
+.iconPlaceholder {
+  font-size: 1.25rem;
+  margin-left: $spacing-sm;
+  display: none;
+
+  @include breakpoint(tablet) {
+    font-size: 1.5rem;
+  }
+
+  @include breakpoint(desktop) {
+    display: inline;
+  }
+}
+
+.contentWrapperBase {
+  overflow: hidden;
+  transition: max-height 500ms ease-in-out, opacity 500ms ease-in-out;
+  max-height: 0;
+  opacity: 0;
+
+  @include breakpoint(desktop) {
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
+
+.contentWrapperExpanded {
+  max-height: 1500px;
+  opacity: 1;
+}
+
+.contentInner {
+  padding: $spacing-sm;
+  border-top-width: 1px;
+  border-top-style: solid;
+
+  @include breakpoint(tablet) {
+    padding: $spacing-md;
+  }
+
+  [data-theme="light"] & {
+    border-color: $black_200;
+  }
+  [data-theme="dark"] & {
+    border-color: $black_700;
+  }
+}

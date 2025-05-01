@@ -1,19 +1,13 @@
-import type { Metadata, Viewport } from "next";
-import { GeistSans } from "geist/font/sans";
+import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import ThemeToggleButton from "@/components/ThemeToggleButton";
+import layoutStyles from "@/styles/layout/RootLayout.module.scss";
 
 export const metadata: Metadata = {
   title: "Game Dashboard",
   description: "Live Leaderboard and Market for the Game",
   manifest: "/manifest.json",
-};
-
-export const viewport: Viewport = {
-  themeColor: "#000000",
-  initialScale: 1,
-  width: "device-width",
 };
 
 export default function RootLayout({
@@ -23,9 +17,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${GeistSans.variable} antialiased bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200`}
-      >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className={layoutStyles.rootBody}>
         <ThemeProvider>
           <div className="absolute top-4 right-4 z-50">
             <ThemeToggleButton />

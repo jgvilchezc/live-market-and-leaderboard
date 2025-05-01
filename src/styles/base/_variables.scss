@@ -1,58 +1,128 @@
-// src/styles/base/_variables.scss
-
-// Base Colors (Selected from user examples)
+$brand__500: #3e63dd;
+$brand__light: #e3e9fd;
+$green_light: #c6f6d5;
+$green_text: #1c4532;
+$black_dark: #192140;
+$gray_light: #f0f4fe;
+$gray__500: #718096;
+$surface__light: #fcfcfd;
+$primary: #101837;
+$primary_blue: #2955a3;
+$gray: #c4c4c4;
+$darkGray: #949494;
+$secondary: #9fa2d1;
 $white: #ffffff;
-$black: #17191a;
-$gray-50: #f9fafb; // Light background
-$gray-100: #f3f4f6; // Light hover
-$gray-300: #d1d5db; // Light border / text dark mode
-$gray-500: #6b7280; // Medium text
-$gray-600: #4b5563; // Darker border
-$gray-700: #374151; // Dark hover
-$gray-800: #1f2937; // Dark background
-$gray-900: #111827; // Dark text
+$primaryLight: #101837;
+$primaryDark: #101837;
+$secondaryLight: #9fa2d1;
+$warning: #de035e;
+$warningText: #ba9e00;
+$success: #2955a3;
 
-$blue-500: #3b82f6; // Accent (Example)
+$blue_50: #deebff;
+$blue_100: #d7e4ff;
+$blue_200: #a7c2ff;
+$blue_300: #82a8fc;
+$blue_400: #4b83ff;
+$blue_500: #004fff;
+$blue_600: #0040f1;
+$blue_700: #0035e2;
+$blue_800: #002ad6;
+$blue_900: #0014c4;
 
-// Fonts (Using Geist Sans from layout for consistency)
-// $header: "Roboto";
-// $default: "Roboto";
+$purple_50: #edf0ff;
+$purple_100: #dce4ff;
+$purple_200: #d1d6ff;
+$purple_300: #c1cfff;
+$purple_400: #7c9aff;
+$purple_500: #436bff;
+$purple_600: #3e63dd;
+$purple_700: #0d33b2;
+$purple_800: #1600a4;
+$purple_900: #1c0d80;
 
-// Breakpoints
+$navy_50: #fafcff;
+$navy_100: #f4f7fb;
+$navy_200: #ebf0f6;
+$navy_300: #e2efff;
+$navy_400: #a3d3ff;
+$navy_500: #64b5fd;
+$navy_600: #0684f3;
+$navy_700: #0774f3;
+$navy_800: #043da0;
+$navy_900: #152d76;
+
+$mint_50: #e2fdff;
+$mint_100: #b9f7fc;
+$mint_200: #82e3fd;
+$mint_300: #49f3ff;
+$mint_400: #01ffda;
+$mint_500: #69d4db;
+$mint_600: #4abcbb;
+$mint_700: #479998;
+$mint_800: #0a7675;
+$mint_900: #134646;
+
+$black_50: #fcfcfc;
+$black_100: #f4f4f4;
+$black_200: #eaeaea;
+$black_300: #d9d9d9;
+$black_400: #c7c7c7;
+$black_500: #959595;
+$black_600: #8c8c8c;
+$black_700: #535353;
+$black_800: #434343;
+$black_900: #17191a;
+
+$landing-primary-color: #4f46e5;
+$landing-secondary-color: #7c3aed;
+$landing-text-dark: #1f2937;
+$landing-text-gray: #6b7280;
+$landing-bg-light: #f9fafb;
+
+$black: $black_900;
+
+$gray-50: $black_50;
+$gray-100: $black_100;
+$gray-300: $black_300;
+$gray-500: $black_500;
+$gray-600: $black_600;
+$gray-700: $black_700;
+$gray-800: $black_800;
+$gray-900: $black_900;
+
+$brand-500: $purple_600;
+
+$header: "Roboto", sans-serif;
+$default: "Roboto", sans-serif;
+
 $breakpoints: (
-  sm: 640px,
-  // Small devices (phones)
-  md: 768px,
-  // Medium devices (tablets)
-  lg: 1024px,
-  // Large devices (desktops)
-  xl: 1280px,
-  // Extra large devices
-  xxl: 1536px // 2X large devices (4K potentially starts here),
+  largePhone: 640px,
+  tablet: 768px,
+  desktop: 1024px,
+  desktopLarge: 1367px,
 );
 
-// Mixin for easy media query usage
 @mixin breakpoint($key) {
   @if map-has-key($breakpoints, $key) {
     @media (min-width: map-get($breakpoints, $key)) {
       @content;
     }
   } @else {
-    @warn "Breakpoint `#{$key}` not found.";
+    @warn "Breakpoint `#{$key}` not found in new definitions (largePhone, tablet, desktop, desktopLarge).";
   }
 }
 
-// Spacing
 $spacing-xs: 0.5rem;
 $spacing-sm: 0.75rem;
 $spacing-md: 1rem;
 $spacing-lg: 1.5rem;
 
-// Font Sizes
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
 $font-size-base: 1rem;
 
-// Border Radius
-$border-radius-base: 0.375rem; // rounded-md
-$border-radius-lg: 0.5rem; // rounded-lg
+$border-radius-base: 0.375rem;
+$border-radius-lg: 0.5rem;
+
+$transition-base: all 0.2s ease-in-out;

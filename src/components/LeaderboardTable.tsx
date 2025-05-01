@@ -1,7 +1,5 @@
 import React from "react";
-// Import the SCSS module
 import styles from "@/styles/components/LeaderboardTable.module.scss";
-// Import the Player type
 import type { Player } from "@/utils/api";
 
 interface LeaderboardTableProps {

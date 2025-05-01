@@ -22,12 +22,10 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>("light"); // Default theme
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    // Check local storage first
     const storedTheme = localStorage.getItem("theme") as Theme | null;
-    // Check system preference
     const prefersDark =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -43,19 +41,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const root = window.document.documentElement;
-    // Remove previous theme class/attribute
     root.removeAttribute("data-theme");
-    // Add current theme attribute
     root.setAttribute("data-theme", theme);
-    // Store preference
     localStorage.setItem("theme", theme);
-
-    // Also update Tailwind's dark mode class if needed (optional, depends on tailwind.config)
-    // if (theme === 'dark') {
-    //   root.classList.add('dark');
-    // } else {
-    //   root.classList.remove('dark');
-    // }
   }, [theme]);
 
   const toggleTheme = () => {

@@ -1,49 +1,39 @@
 @import "../base/variables";
 
-// Adapt the user-provided styles for the theme toggle button
 .themeToggleButton {
-  display: inline-flex; // Use inline-flex for better alignment with text/icons
-  padding: $spacing-xs $spacing-lg; // Use variables
+  display: inline-flex;
+  padding: $spacing-xs $spacing-lg;
   align-items: center;
   justify-content: center;
   gap: 7px;
-  color: $gray-700; // Use variable for text color (adjust based on light theme needs)
-  // font-family: Pretendard; // Let's use the project's default font (Geist Sans)
-  font-size: $font-size-sm; // Use variable
+  color: $gray-700;
+  font-size: $font-size-sm;
   font-weight: 500;
   line-height: normal;
   position: relative;
   z-index: 1;
-  background-color: $white; // Use variable
-  border-radius: 20px; // Consider using a variable if common
+  background-color: $white;
+  border-radius: 20px;
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  overflow: hidden; // Ensure pseudo-elements don't bleed out
+  overflow: hidden;
 
-  // Style the SVG icon within the button
   svg {
-    width: 1.25rem; // Equivalent to h-5 w-5 in Tailwind
+    width: 1.25rem;
     height: 1.25rem;
-    color: $gray-700; // Match button text color initially
+    color: $gray-700;
     transition: color 0.3s ease;
-    // Target path if needed, but direct color on svg usually works
-    // path {
-    //   transition: color 0.3s ease;
-    // }
   }
 
-  // Gradient border using ::before
   &::before {
     content: "";
     position: absolute;
-    // Adjust positioning to account for the border thickness
     top: -2px;
     left: -2px;
     right: -2px;
     bottom: -2px;
-    border-radius: 20px; // Match parent radius
-    // Example gradient - adjust colors as needed
+    border-radius: 20px;
     background: linear-gradient(
       90deg,
       rgba(193, 207, 255, 1) 0%,
@@ -53,7 +43,6 @@
     z-index: -1;
   }
 
-  // Inner background using ::after to mask the gradient border
   &::after {
     content: "";
     position: absolute;
@@ -61,21 +50,19 @@
     left: 2px;
     right: 2px;
     bottom: 2px;
-    background-color: $white; // Use variable
-    border-radius: 18px; // Slightly smaller to reveal the gradient border
+    background-color: $white;
+    border-radius: 18px;
     z-index: -1;
-    transition: background-color 0.3s ease, background 0.3s ease; // Include background transition
+    transition: background-color 0.3s ease, background 0.3s ease;
   }
 
-  // Hover state
   &:hover {
-    color: $white !important; // Force white text on hover
+    color: $white !important;
 
     svg {
-      color: $white; // White icon on hover
+      color: $white;
     }
 
-    // Change ::after background to reveal the gradient fully on hover
     &::after {
       background: linear-gradient(
         90deg,
@@ -83,39 +70,40 @@
         rgba(62, 99, 221, 1) 59%,
         rgba(0, 255, 218, 1) 100%
       );
-      // Or simply make it transparent if the gradient is on ::before
-      // background-color: transparent;
     }
   }
 
-  // Dark theme adjustments
   [data-theme="dark"] & {
-    background-color: $gray-800; // Dark background for the button
-    color: $gray-300; // Lighter text for dark theme
+    background-color: $gray-800;
+    color: $gray-300;
 
     svg {
-      color: $gray-300; // Lighter icon for dark theme
+      color: $gray-300;
     }
 
     &::after {
-      background-color: $gray-800; // Match dark button background
+      background-color: $gray-800;
     }
 
     &:hover {
-      color: $white !important; // Keep hover text white
+      color: $white !important;
       svg {
-        color: $white; // Keep hover icon white
+        color: $white;
       }
       &::after {
-        // Ensure hover reveals gradient in dark mode too
         background: linear-gradient(
           90deg,
           rgba(193, 207, 255, 1) 0%,
           rgba(62, 99, 221, 1) 59%,
           rgba(0, 255, 218, 1) 100%
         );
-        // background-color: transparent;
       }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .themeToggleButton {
+    padding: $spacing-xs $spacing-sm; // Reduced horizontal padding
   }
 }

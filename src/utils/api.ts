@@ -1,6 +1,3 @@
-// src/utils/api.ts
-
-// Define shared interfaces for API responses
 export interface Player {
   rank: number;
   username: string;
@@ -25,12 +22,11 @@ export interface MarketResponse {
   items: Item[];
 }
 
-// Utility function to fetch leaderboard data
 export async function getLeaderboardData(): Promise<LeaderboardResponse | null> {
   const url = "https://api-game.bloque.app/game/leaderboard";
   try {
     const res = await fetch(url, {
-      next: { revalidate: 60 }, // Revalidate every 60 seconds
+      next: { revalidate: 60 },
     });
     if (!res.ok) {
       throw new Error(`HTTP error fetching leaderboard! status: ${res.status}`);
@@ -42,12 +38,11 @@ export async function getLeaderboardData(): Promise<LeaderboardResponse | null> 
   }
 }
 
-// Utility function to fetch market data
 export async function getMarketData(): Promise<MarketResponse | null> {
   const url = "https://api-game.bloque.app/game/market";
   try {
     const res = await fetch(url, {
-      next: { revalidate: 3600 }, // Revalidate every hour
+      next: { revalidate: 3600 },
     });
     if (!res.ok) {
       throw new Error(`HTTP error fetching market! status: ${res.status}`);

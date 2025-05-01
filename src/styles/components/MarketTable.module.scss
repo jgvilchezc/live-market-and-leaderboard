@@ -1,23 +1,15 @@
+/* SCSS module for MarketTable */
+
+/* Styles for Market Table */
+
 @import "../base/variables";
 
 .tableHeader {
-  background-color: $gray-50;
+  [data-theme="light"] & {
+    background-color: $gray-50;
+  }
   [data-theme="dark"] & {
     background-color: $gray-800;
-  }
-}
-
-.tableRow {
-  &:hover {
-    .bodyCell,
-    .nameCell,
-    .descriptionCell,
-    .costCell {
-      background-color: $gray-100;
-      [data-theme="dark"] & {
-        background-color: $gray-700;
-      }
-    }
   }
 }
 
@@ -26,9 +18,12 @@
   text-align: left;
   font-size: $font-size-xs;
   font-weight: 500;
-  color: $gray-500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+
+  [data-theme="light"] & {
+    color: $gray-700;
+  }
   [data-theme="dark"] & {
     color: $gray-300;
   }
@@ -37,10 +32,16 @@
 .bodyCell {
   padding: $spacing-md $spacing-lg;
   font-size: $font-size-sm;
-  color: $gray-500;
   vertical-align: middle;
-  transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 
+  [data-theme="light"] & {
+    color: $gray-700;
+    background-color: $white;
+    &:hover {
+      color: $gray-900;
+    }
+  }
   [data-theme="dark"] & {
     color: $gray-300;
   }
@@ -50,7 +51,11 @@
   composes: bodyCell;
   white-space: nowrap;
   font-weight: 500;
-  color: $gray-900;
+
+  [data-theme="light"] & {
+    color: $gray-900;
+    background-color: $white;
+  }
   [data-theme="dark"] & {
     color: $white;
   }
@@ -66,14 +71,28 @@
   white-space: nowrap;
 }
 
-// --- Media Queries ---
+.tableRow {
+  &:hover {
+    .bodyCell,
+    .nameCell,
+    .descriptionCell,
+    .costCell {
+      [data-theme="light"] & {
+        background-color: $gray-100;
+      }
+      [data-theme="dark"] & {
+        background-color: $gray-700;
+      }
+    }
+  }
+}
 
 .headerCell,
 .bodyCell {
   padding: $spacing-xs $spacing-sm;
 }
 
-@include breakpoint(sm) {
+@include breakpoint(tablet) {
   .headerCell,
   .bodyCell {
     padding: $spacing-sm $spacing-lg;
