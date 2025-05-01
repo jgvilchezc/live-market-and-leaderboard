@@ -7,14 +7,8 @@ import withPWAInit from "next-pwa";
 const withPWA = withPWAInit({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
-  // Add buildExcludes to prevent specific files from being precached
-  buildExcludes: [
-    // Exclude the problematic manifest file
-    /_next\/app-build-manifest\.json$/i,
-    // You might need regex for other problematic internal files if they appear
-    // Example: /_next\/some-other-internal-file\.js$/i
-  ],
-  // runtimeCaching: [ // <-- Comenta o elimina esta sección temporalmente
+  buildExcludes: ["_next/app-build-manifest.json"],
+  // runtimeCaching: [
   //   {
   //     urlPattern: new RegExp(`^${apiBaseUrl}.*`),
   //     handler: "StaleWhileRevalidate",
