@@ -25,9 +25,7 @@ export interface MarketResponse {
 export async function getLeaderboardData(): Promise<LeaderboardResponse | null> {
   const url = "https://api-game.bloque.app/game/leaderboard";
   try {
-    const res = await fetch(url, {
-      next: { revalidate: 60 },
-    });
+    const res = await fetch(url);
     if (!res.ok) {
       throw new Error(`HTTP error fetching leaderboard! status: ${res.status}`);
     }
@@ -41,9 +39,7 @@ export async function getLeaderboardData(): Promise<LeaderboardResponse | null> 
 export async function getMarketData(): Promise<MarketResponse | null> {
   const url = "https://api-game.bloque.app/game/market";
   try {
-    const res = await fetch(url, {
-      next: { revalidate: 3600 },
-    });
+    const res = await fetch(url);
     if (!res.ok) {
       throw new Error(`HTTP error fetching market! status: ${res.status}`);
     }
