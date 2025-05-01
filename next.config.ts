@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import withPWAInit from "next-pwa";
+import withPWAInit from "@ducanh2912/next-pwa";
 
 // API endpoint base URL (kept for reference, but not used in caching now)
 // const apiBaseUrl = "https://api-game.bloque.app/game/";
@@ -7,23 +7,6 @@ import withPWAInit from "next-pwa";
 const withPWA = withPWAInit({
   dest: "public",
   disable: process.env.NODE_ENV === "development",
-  buildExcludes: ["_next/app-build-manifest.json"],
-  // runtimeCaching: [
-  //   {
-  //     urlPattern: new RegExp(`^${apiBaseUrl}.*`),
-  //     handler: "StaleWhileRevalidate",
-  //     options: {
-  //       cacheName: "api-game-cache",
-  //       expiration: {
-  //         maxEntries: 50,
-  //         maxAgeSeconds: 60 * 60 * 24,
-  //       },
-  //       cacheableResponse: {
-  //         statuses: [0, 200],
-  //       },
-  //     },
-  //   },
-  // ],
 });
 
 const nextConfig: NextConfig = {};
