@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { io, Socket } from "socket.io-client";
 import Expandable from "./Expandable";
 import LeaderboardTable from "./LeaderboardTable";
 import MarketTable from "./MarketTable";
@@ -9,18 +10,50 @@ import styles from "@/styles/components/DashboardDisplay.module.scss";
 
 const INITIAL_VISIBLE_COUNT = 10;
 const INCREMENT_COUNT = 10;
+const SOCKET_SERVER_URL =
+  process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
-interface DashboardDisplayProps {
-  leaderboardData: LeaderboardResponse | null;
-  marketData: MarketResponse | null;
-}
-
-const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
-  leaderboardData,
-  marketData,
-}) => {
+const DashboardDisplay = () => {
+  const [leaderboardData, setLeaderboardData] =
+    useState<LeaderboardResponse | null>(null);
+  const [marketData, setMarketData] = useState<MarketResponse | null>(null);
+  const [isConnected, setIsConnected] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    // Initialize socket connection
+    const socket: Socket = io(SOCKET_SERVER_URL);
+
+    socket.on("connect", () => {
+      console.log("Connected to Socket.IO server");
+      setIsConnected(true);
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Disconnected from Socket.IO server");
+      setIsConnected(false);
+    });
+
+    socket.on("leaderboardUpdate", (data: LeaderboardResponse) => {
+      console.log("Received leaderboard update:", data);
+      setLeaderboardData(data);
+      // Reset visibility/search when data updates? Optional.
+      // setSearchTerm("");
+      // setVisibleCount(INITIAL_VISIBLE_COUNT);
+    });
+
+    socket.on("marketUpdate", (data: MarketResponse) => {
+      console.log("Received market update:", data);
+      setMarketData(data);
+    });
+
+    // Cleanup on component unmount
+    return () => {
+      socket.disconnect();
+      console.log("Socket disconnected on cleanup");
+    };
+  }, []);
 
   const allPlayers: Player[] = leaderboardData?.players || [];
   const filteredPlayers = allPlayers.filter((player) =>
@@ -55,6 +88,12 @@ const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
             />
           </div>
 
+          {!isConnected && (
+            <p className={styles.fallbackText}>
+              Connecting to real-time updates...
+            </p>
+          )}
+
           {leaderboardData && visiblePlayers.length > 0 ? (
             <>
               <LeaderboardTable players={visiblePlayers} />
@@ -73,6 +112,8 @@ const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
             <p className={styles.fallbackText}>
               No players found matching &apos;{searchTerm}&apos;.
             </p>
+          ) : !isConnected ? (
+            <p className={styles.fallbackText}>Waiting for initial data...</p>
           ) : (
             <p className={styles.fallbackText}>
               {leaderboardData === null
@@ -85,8 +126,16 @@ const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
 
       <section>
         <Expandable title="Market" startCollapsed={true}>
+          {!isConnected && (
+            <p className={styles.fallbackText}>
+              Connecting to real-time updates...
+            </p>
+          )}
+
           {marketData && marketData.items && marketData.items.length > 0 ? (
             <MarketTable items={marketData.items} />
+          ) : !isConnected ? (
+            <p className={styles.fallbackText}>Waiting for initial data...</p>
           ) : (
             <p className={styles.fallbackText}>
               {marketData === null
