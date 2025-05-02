@@ -13,47 +13,79 @@ const INCREMENT_COUNT = 10;
 const SOCKET_SERVER_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
-const DashboardDisplay = () => {
+// Define props interface
+interface DashboardDisplayProps {
+  initialLeaderboardData: LeaderboardResponse | null;
+  initialMarketData: MarketResponse | null;
+}
+
+// Use React.FC and destructure props
+const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
+  initialLeaderboardData,
+  initialMarketData,
+}) => {
+  // Initialize state from props
   const [leaderboardData, setLeaderboardData] =
-    useState<LeaderboardResponse | null>(null);
-  const [marketData, setMarketData] = useState<MarketResponse | null>(null);
+    useState<LeaderboardResponse | null>(initialLeaderboardData);
+  const [marketData, setMarketData] = useState<MarketResponse | null>(
+    initialMarketData
+  );
   const [isConnected, setIsConnected] = useState(false);
+  // Add state to track if online connection was attempted
+  const [attemptedConnection, setAttemptedConnection] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    // Initialize socket connection
-    const socket: Socket = io(SOCKET_SERVER_URL);
+    let socket: Socket | null = null;
 
-    socket.on("connect", () => {
-      console.log("Connected to Socket.IO server");
-      setIsConnected(true);
-    });
+    if (typeof window !== "undefined" && navigator.onLine) {
+      console.log("Attempting to connect to Socket.IO server...");
+      setAttemptedConnection(true); // Mark that we tried to connect
+      socket = io(SOCKET_SERVER_URL, {});
 
-    socket.on("disconnect", () => {
-      console.log("Disconnected from Socket.IO server");
-      setIsConnected(false);
-    });
+      socket.on("connect", () => {
+        console.log("Connected to Socket.IO server");
+        setIsConnected(true);
+      });
 
-    socket.on("leaderboardUpdate", (data: LeaderboardResponse) => {
-      console.log("Received leaderboard update:", data);
-      setLeaderboardData(data);
-      // Reset visibility/search when data updates? Optional.
-      // setSearchTerm("");
-      // setVisibleCount(INITIAL_VISIBLE_COUNT);
-    });
+      socket.on("connect_error", (err) => {
+        console.warn("Socket connection error:", err.message);
+        setIsConnected(false);
+        socket?.disconnect();
+      });
 
-    socket.on("marketUpdate", (data: MarketResponse) => {
-      console.log("Received market update:", data);
-      setMarketData(data);
-    });
+      socket.on("disconnect", () => {
+        console.log("Disconnected from Socket.IO server");
+        setIsConnected(false);
+      });
 
-    // Cleanup on component unmount
+      socket.on("leaderboardUpdate", (data: LeaderboardResponse) => {
+        console.log("Received leaderboard update:", data);
+        setLeaderboardData(data);
+      });
+
+      socket.on("marketUpdate", (data: MarketResponse) => {
+        console.log("Received market update:", data);
+        setMarketData(data);
+      });
+    } else {
+      console.log("Offline or SSR, skipping socket connection attempt.");
+    }
     return () => {
-      socket.disconnect();
-      console.log("Socket disconnected on cleanup");
+      if (socket) {
+        socket.disconnect();
+        console.log("Socket disconnected on cleanup");
+      }
     };
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once on mount
+
+  // Determine loading/fallback states based on connection attempt and data
+  const showConnectingMessage =
+    attemptedConnection && !isConnected && navigator.onLine;
+  const hasLeaderboardData =
+    leaderboardData && leaderboardData.players.length > 0;
+  const hasMarketData = marketData && marketData.items.length > 0;
 
   const allPlayers: Player[] = leaderboardData?.players || [];
   const filteredPlayers = allPlayers.filter((player) =>
@@ -88,13 +120,13 @@ const DashboardDisplay = () => {
             />
           </div>
 
-          {!isConnected && (
+          {showConnectingMessage && (
             <p className={styles.fallbackText}>
               Connecting to real-time updates...
             </p>
           )}
 
-          {leaderboardData && visiblePlayers.length > 0 ? (
+          {hasLeaderboardData ? (
             <>
               <LeaderboardTable players={visiblePlayers} />
               {canShowMore && (
@@ -108,12 +140,14 @@ const DashboardDisplay = () => {
                 </div>
               )}
             </>
+          ) : showConnectingMessage ? (
+            <p className={styles.fallbackText}>
+              Waiting for initial real-time data...
+            </p>
           ) : leaderboardData && filteredPlayers.length === 0 && searchTerm ? (
             <p className={styles.fallbackText}>
               No players found matching &apos;{searchTerm}&apos;.
             </p>
-          ) : !isConnected ? (
-            <p className={styles.fallbackText}>Waiting for initial data...</p>
           ) : (
             <p className={styles.fallbackText}>
               {leaderboardData === null
@@ -126,16 +160,18 @@ const DashboardDisplay = () => {
 
       <section>
         <Expandable title="Market" startCollapsed={true}>
-          {!isConnected && (
+          {showConnectingMessage && (
             <p className={styles.fallbackText}>
               Connecting to real-time updates...
             </p>
           )}
 
-          {marketData && marketData.items && marketData.items.length > 0 ? (
+          {hasMarketData ? (
             <MarketTable items={marketData.items} />
-          ) : !isConnected ? (
-            <p className={styles.fallbackText}>Waiting for initial data...</p>
+          ) : showConnectingMessage ? (
+            <p className={styles.fallbackText}>
+              Waiting for initial real-time data...
+            </p>
           ) : (
             <p className={styles.fallbackText}>
               {marketData === null
