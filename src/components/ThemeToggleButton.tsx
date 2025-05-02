@@ -4,7 +4,6 @@ import React from "react";
 import { useTheme } from "@/context/ThemeContext";
 import styles from "@/styles/components/ThemeToggleButton.module.scss";
 
-// Simple SVG Icons for Sun and Moon
 const SunIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

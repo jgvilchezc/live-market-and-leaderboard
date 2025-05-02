@@ -13,25 +13,21 @@ const INCREMENT_COUNT = 10;
 const SOCKET_SERVER_URL =
   process.env.NEXT_PUBLIC_SOCKET_URL || "http://localhost:3001";
 
-// Define props interface
 interface DashboardDisplayProps {
   initialLeaderboardData: LeaderboardResponse | null;
   initialMarketData: MarketResponse | null;
 }
 
-// Use React.FC and destructure props
 const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
   initialLeaderboardData,
   initialMarketData,
 }) => {
-  // Initialize state from props
   const [leaderboardData, setLeaderboardData] =
     useState<LeaderboardResponse | null>(initialLeaderboardData);
   const [marketData, setMarketData] = useState<MarketResponse | null>(
     initialMarketData
   );
   const [isConnected, setIsConnected] = useState(false);
-  // Add state to track if online connection was attempted
   const [attemptedConnection, setAttemptedConnection] = useState(false);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,7 +37,7 @@ const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
 
     if (typeof window !== "undefined" && navigator.onLine) {
       console.log("Attempting to connect to Socket.IO server...");
-      setAttemptedConnection(true); // Mark that we tried to connect
+      setAttemptedConnection(true);
       socket = io(SOCKET_SERVER_URL, {});
 
       socket.on("connect", () => {
@@ -78,9 +74,8 @@ const DashboardDisplay: React.FC<DashboardDisplayProps> = ({
         console.log("Socket disconnected on cleanup");
       }
     };
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
 
-  // Determine loading/fallback states based on connection attempt and data
   const showConnectingMessage =
     attemptedConnection && !isConnected && navigator.onLine;
   const hasLeaderboardData =
