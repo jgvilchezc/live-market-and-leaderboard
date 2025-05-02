@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { Server, Socket } from "socket.io";
-import type { LeaderboardResponse, MarketResponse } from "@/utils/api";
-import { getLeaderboardData, getMarketData } from "@/utils/api";
+import type { LeaderboardResponse, MarketResponse } from "../src/utils/api";
+import { getLeaderboardData, getMarketData } from "../src/utils/api";
 
 const PORT = process.env.PORT || 3001;
 const POLLING_INTERVAL_MS = 5000;
