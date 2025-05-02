@@ -7,7 +7,9 @@
     "dev:socket": "tsx watch server/socketServer.ts",
     "dev": "concurrently \"npm:dev:next\" \"npm:dev:socket\" --names \"NEXT,SOCKET\" --prefix-colors \"bgBlue.bold,bgMagenta.bold\"",
     "build": "next build",
+    "build:server": "tsc --project tsconfig.server.json",
     "start": "next start",
+    "start:server": "node dist-server/server/socketServer.js",
     "lint": "next lint"
   },
   "dependencies": {

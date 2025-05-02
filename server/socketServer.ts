@@ -3,7 +3,7 @@ import { Server, Socket } from "socket.io";
 import type { LeaderboardResponse, MarketResponse } from "@/utils/api";
 import { getLeaderboardData, getMarketData } from "@/utils/api";
 
-const PORT = process.env.SOCKET_PORT || 3001;
+const PORT = process.env.PORT || 3001;
 const POLLING_INTERVAL_MS = 5000;
 
 const httpServer = createServer();
